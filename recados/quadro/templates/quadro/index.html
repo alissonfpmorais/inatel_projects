@@ -1,0 +1,30 @@
+<html>
+  <head>
+    <title>Quadro de recados</title>
+  </head>
+  <body>
+    <p>Último acesso: {{ ultima_data|date:"d/m/Y H:i:s" }}</p>
+    <p>Temos {{ quantidade_recados }} recado(s).</p>
+    <p><a href="{% url 'form_incluir' %}">Incluir novo recado</a></p>
+    {% if seus_recados %}
+      <p>Seus recados:</p>
+      <ul>
+        {% for recado in seus_recados %}
+          <li><a href="/quadro/{{ recado.id }}">{{ recado.titulo }}</a></li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    {% if recados_seguidos %}
+      <p>Recados de quem você segue:</p>
+      <ul>
+        {% for recado in recados_seguidos %}
+          <li><a href="/quadro/{{ recado.id }}">{{ recado.titulo }}</a></li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    <form method="post" action="{% url 'logout' %}">
+      {% csrf_token %}
+      <button type="submit">logout</button>
+    </form>
+  </body>
+</html>
